@@ -1,10 +1,33 @@
 class EvalEx
+  OPERATORS = ["|", "&", "+", "*"]
+
   def run(input)
+    parsed = parse(input)
+    operator_run(parsed)
     #...
-    output = 1
+#    output = 1
   end
+
   private
-  def parse
+
+  def parse(array)
+#    regex = /[\|\&\+\*]/
+    #    regex = /[#{ OPERATORS.map{ |e| '/' + e }.join } ]/
+    regex = /(\d+)/
+    array.split( regex )[1..-1]
+  end
+
+  def operator_run(array)
+    OPERATORS.each do |op|
+      while i = array.index(op)
+        result = eval(array[i-1] + op + array[i+1])
+        array[i]   = result
+        array[i-1] = nil
+        array[i+1] = nil
+        array.compact!
+      end
+    end
+    array
   end
 end
 
@@ -65,7 +88,8 @@ class EvalExTest < Test::Unit::TestCase
     "50": ["374958|6727+53965&53*954&29|6*138572+59|547783&43*8998", "12178274756590800" ]
   )
   def test_evalex(data)
-    assert_equal(output, data)
+    input, output = data
+#    assert_equal(output, data)
     assert do
       EvalEx.new.run(input) == output
     end
