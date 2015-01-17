@@ -20,14 +20,14 @@ class EvalEx
   def operator_run(array)
     OPERATORS.each do |op|
       while i = array.index(op)
-        result = eval(array[i-1] + op + array[i+1])
+        result = eval(array[i-1..i+1].join)
         array[i]   = result
         array[i-1] = nil
         array[i+1] = nil
         array.compact!
       end
     end
-    array
+    array.first.to_s
   end
 end
 
