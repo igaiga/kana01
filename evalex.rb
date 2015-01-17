@@ -64,7 +64,7 @@ class EvalExTest < Test::Unit::TestCase
     "49": ["82+14&0*344+34+542916&18*11|844|64*873223|840993", "23813260003764" ],    
     "50": ["374958|6727+53965&53*954&29|6*138572+59|547783&43*8998", "12178274756590800" ]
   )
-  def evalex_test(data)
+  def test_evalex(data)
     assert_equal(output, data)
     assert do
       EvalEx.new.run(input) == output
